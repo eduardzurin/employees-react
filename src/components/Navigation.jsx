@@ -11,7 +11,7 @@ export default function Navigation(){
                   <a class="nav-link text-white" href="tribes">Tribes</a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link text-white" href="employees">Employees</a>
+                        <a class="nav-link text-white" href="employees">Employees</a>
                 </li>
               </ul>
             </div>

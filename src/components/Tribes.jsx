@@ -1,6 +1,5 @@
 import Tribe from "./Tribe";
 
-
 export default function Tribes({ tribes }) {
   const tribesList = tribes.map((tribe) => (
     <Tribe
@@ -11,7 +10,6 @@ export default function Tribes({ tribes }) {
   ));
 
   return (
-
     <div class="container-fluid main-employees p-10 align-items-center ">
       <table class="table table-hover shadow p-3 mb-5 bg-body rounded my-4">
         <thead>

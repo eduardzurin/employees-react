@@ -1,6 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navigation from "./components/Navigation";
+import EmployeesTable from "./components/EmployeesTable";
+import Tribes from "./components/Tribes"
+import AddEmployee from "./components/AddEmployee"
 
 const employees = [
   {
@@ -40,7 +43,12 @@ function App() {
         <Routes>
           <Route path="/" element={<div>test</div>}
           />
+          <Route path="/employees" element={<EmployeesTable employeesList={employees}></EmployeesTable>}
+          />
+          <Route path="/tribes" element={<Tribes tribes={tribes}></Tribes>}
+          />
         </Routes>
+        
       </BrowserRouter>
   );
 }
