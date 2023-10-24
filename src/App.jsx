@@ -3,31 +3,9 @@ import "./App.css";
 import Navigation from "./components/Navigation";
 import EmployeesTable from "./components/EmployeesTable";
 import Tribes from "./components/Tribes"
-import AddEmployee from "./components/AddEmployee"
 
-const employees = [
-  {
-    id: 1,
-    name: "Mark",
-    title: "Intern",
-    tribe: "Internstellar",
-    date: "08.12.2012",
-  },
-  {
-    id: 2,
-    name: "Helen",
-    title: "Developer",
-    tribe: "Gears",
-    date: "08.10.2010",
-  },
-  {
-    id: 3,
-    name: "Dude",
-    title: "Funny guy",
-    tribe: "Billing",
-    date: "08.12.2012",
-  },
-];
+
+
 
 const tribes = [
   { id: 1, name: "InternStellar", department: "Other Engineering" },
@@ -43,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<div>test</div>}
           />
-          <Route path="/employees" element={<EmployeesTable employeesList={employees}></EmployeesTable>}
+          <Route path="/employees" element={<EmployeesTable></EmployeesTable>}
           />
           <Route path="/tribes" element={<Tribes tribes={tribes}></Tribes>}
           />
@@ -52,5 +30,6 @@ function App() {
       </BrowserRouter>
   );
 }
+
 
 export default App;

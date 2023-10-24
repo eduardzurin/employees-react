@@ -1,13 +1,15 @@
-export default function Employee(props){
+import '../index.css';
+
+export default function Employee({employee, deleteEmployee}){
     return(
-      <tr>
-      <th scope="row">{props.id}</th>
-          <td>{props.name}</td>
-          <td>{props.title}</td>
-          <td>{props.tribe}</td>
-          <td>{props.date}</td>
+      <tr className="employee">
+      <th scope="row">{employee.id}</th>
+          <td>{employee.name}</td>
+          <td>{employee.title}</td>
+          <td>{employee.tribe}</td>
+          <td>{employee.date}</td>
           <td>
-        <button className="btn btn-danger">x</button>
+        <button onClick={() => deleteEmployee(employee)} className="btn btn-danger">x</button>
       </td>
     </tr>
 

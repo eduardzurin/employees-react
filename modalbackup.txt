@@ -1,0 +1,44 @@
+        <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Control
+                type="text"
+                placeholder="Name"
+                autoFocus
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Control
+                type="text"
+                placeholder="Position"
+                autoFocus
+              />
+            </Form.Group>
+            <Form.Select aria-label="Default select example">
+      <option>Select tribe</option>
+      <option value="Interstellar">Interstellar</option>
+      <option value="Gears">Gears</option>
+      <option value="Billing">Billing</option>
+    </Form.Select>
+
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Start date:</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="DD/MM/YYYY"
+                autoFocus
+              />
+            </Form.Group>
+          </Form>
+
+
+
+
+
+                  <form>
+      <div>
+        <input  type="text" name="name" placeholder="Name" onChange={formik.handleChange} value={formik.values.name} />
+        <input type="text" name="position" placeholder="Position" onChange={formik.handleChange} value={formik.values.position} />
+        <input type="text" name="tribe" placeholder="Tribe" onChange={formik.handleChange} value={formik.values.tribe} />
+        <input type="text" name="date" placeholder="Start date" onChange={formik.handleChange} value={formik.values.date} />
+      </div>
+    </form>
