@@ -1,14 +1,44 @@
 import Employee from "./Employee";
 import AddEmployee from "./AddEmployee";
 import { useState } from "react";
+import {axiosInstance} from "../index.js";
+import { useEffect } from 'react';
 
 
 
 export default function EmployeesTable() {
 
-  function deleteEmployee(employee){
-    setEmployees(employees.filter((emp) => employee.id !== emp.id))
+  const [employees, setEmployees] =   useState([]);
+
+  useEffect(() => {
+    let ignore = false;
+
+    if(!ignore){
+      fetchData()
+    }
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+
+  async function deleteEmployee(employee){
+    await axiosInstance.delete(`/employees/${employee.id}`).then(response => response.data)
+    fetchData();
   }
+
+  async function fetchData(){
+    try{
+      const data = await axiosInstance.get('/employees').then(response => response.data)
+      data.forEach((employee) => {
+        employee['tribe'] = employee.tribe.name;
+      });
+      setEmployees(data)
+    }catch(error){
+      console.log(error)
+    }
+  }
+
 
   function createEmployee(newEmployee){
     newEmployee.id = employees.length + 1;
@@ -16,31 +46,9 @@ export default function EmployeesTable() {
     setEmployees(newState)
   }
 
+
   
 
-  const [employees, setEmployees] =   useState([
-    {
-      id: 1,
-      name: "Mark",
-      title: "Intern",
-      tribe: "Internstellar",
-      date: "08/12/2012",
-    },
-    {
-      id: 2,
-      name: "Helen",
-      title: "Developer",
-      tribe: "Gears",
-      date: "08/10/2010",
-    },
-    {
-      id: 3,
-      name: "Dude",
-      title: "Funny guy",
-      tribe: "Billing",
-      date: "08/12/2012",
-    },  
-  ]);
 
 
   console.log(employees);

@@ -3,6 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
+import axios from 'axios'
+
+
+export const axiosInstance = axios.create({
+  baseURL: 'http://localhost:3002/api',
+  timeout: 1000,
+});
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
