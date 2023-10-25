@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from 'react-bootstrap/Form';
 import { useState } from "react";
 import { useFormik } from 'formik';
+import { axiosInstance } from "../index.js";
 
 export default function AddEmployee({createEmployee}) {
 
@@ -14,7 +15,7 @@ export default function AddEmployee({createEmployee}) {
       name: '',
       title: '',
       tribe: '',
-      date: '',
+      // date: '',
     },
     validate: (values) => {
       // if error object is not empty, then based on name attribute of form input element, you will see errors, that you can render anyway you like
@@ -30,12 +31,12 @@ export default function AddEmployee({createEmployee}) {
       if (!values.tribe) {
         errors.tribe = 'Tribe is required';
       }
-      if (!values.date) {
-        errors.date = 'Date is required';
-      }
-      if (!values.date.match(regex)){
-        errors.reg = 'Date in wrong format';
-      }
+      // if (!values.date) {
+      //   errors.date = 'Date is required';
+      // }
+      // if (!values.date.match(regex)){
+      //   errors.reg = 'Date in wrong format';
+      // }
       return errors;
     },
     onSubmit: async (values, { resetForm }) => {
@@ -93,12 +94,12 @@ export default function AddEmployee({createEmployee}) {
             </Form.Group>
             <Form.Select name="tribe" onChange={formik.handleChange} value={formik.values.tribe} aria-label="Default select example">
       <option>Select tribe</option>
-      <option value="Interstellar">Interstellar</option>
-      <option value="Gears">Gears</option>
-      <option value="Billing">Billing</option>
+      <option value={1}>Interstellar</option>
+      <option value={2}>Billing</option>
+      <option value={3}>Gears</option>
     </Form.Select>
 
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Start date:</Form.Label>
               <Form.Control
                 type="text"
@@ -108,7 +109,7 @@ export default function AddEmployee({createEmployee}) {
                 onChange={formik.handleChange}
                 value={formik.values.date}
               />
-            </Form.Group>
+            </Form.Group> */}
           </Form>
 
         </Modal.Body>
