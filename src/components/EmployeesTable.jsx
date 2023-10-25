@@ -1,9 +1,8 @@
-import Employee from "./Employee";
-import AddEmployee from "./AddEmployee";
-import { useState } from "react";
-import { axiosInstance } from "../index.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
+import { axiosInstance } from "../index.js";
+import AddEmployee from "./AddEmployee";
+import Employee from "./Employee";
 
 export default function EmployeesTable() {
   const [loading, setLoading] = useState(true);
@@ -25,6 +24,19 @@ export default function EmployeesTable() {
       .delete(`/employees/${employee.id}`)
       .then((response) => response.data);
     fetchData();
+  }
+
+  async function updateEmployee(newEmployee) {
+    console.log(newEmployee)
+    const newEmployees = structuredClone(employees)
+    for (const index in newEmployees) {
+      if (newEmployees[index].id === newEmployee.id) {
+        newEmployees[index].name = newEmployee.name;
+        newEmployees[index].title = newEmployee.title;
+        newEmployees[index].tribe = newEmployee.tribe;
+      }
+    }
+    setEmployees(newEmployees)
   }
 
   async function fetchData() {
@@ -62,6 +74,7 @@ export default function EmployeesTable() {
       key={employee.id}
       employee={employee}
       deleteEmployee={deleteEmployee}
+      update={updateEmployee}
     ></Employee>
   ));
   if (!loading) {

@@ -20,8 +20,19 @@ code {
 .employee:hover button{
   display: block;
   position: absolute;
+}
+
+#deletebtn {
   right: 3.5%;
 }
+
+#updatebtn {
+  position: absolute;
+  right: 8%;
+  margin-top: -24px;
+  
+}
+
 
 .employee {
   height: 55px;
