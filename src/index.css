@@ -23,12 +23,12 @@ code {
 }
 
 #deletebtn {
-  right: 3.5%;
+  right: 20px;
 }
 
 #updatebtn {
   position: absolute;
-  right: 8%;
+  right: 60px;
   margin-top: -24px;
   
 }

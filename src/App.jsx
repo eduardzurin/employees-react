@@ -14,7 +14,7 @@ const tribes = [
 ];
 
 function App() {
-  return (
+  return (  
       <BrowserRouter>
         <Navigation/>
 
@@ -27,7 +27,7 @@ function App() {
           />
         </Routes>
         
-      </BrowserRouter>
+      </BrowserRouter>     
   );
 }
 

@@ -4,22 +4,23 @@ import Form from 'react-bootstrap/Form';
 import { useState } from "react";
 import { useFormik } from 'formik';
 import { axiosInstance } from "../index.js";
+import { useDispatch } from 'react-redux';
+import { addEmp } from "../store/actions/employees";
 
-export default function AddEmployee({createEmployee}) {
+export default function AddEmployee() {
+
+  const dispatch = useDispatch();
 
 
   const formik = useFormik({
     initialValues: {
-      // contains all default values for the form
-      // this will be containing values from state in case of update
       name: '',
       title: '',
       tribe: '',
-      // date: '',
+  
     },
     validate: (values) => {
-      // if error object is not empty, then based on name attribute of form input element, you will see errors, that you can render anyway you like
-      const regex = /\d{1,2}\/\d{1,2}\/\d{2,4}/g 
+
       const errors = {};
 
       if (!values.name) {
@@ -31,19 +32,14 @@ export default function AddEmployee({createEmployee}) {
       if (!values.tribe) {
         errors.tribe = 'Tribe is required';
       }
-      // if (!values.date) {
-      //   errors.date = 'Date is required';
-      // }
-      // if (!values.date.match(regex)){
-      //   errors.reg = 'Date in wrong format';
-      // }
+
       return errors;
     },
     onSubmit: async (values, { resetForm }) => {
-      // this is the function called when submit button is clicked
+
       try {
-				console.log(values); // values in form when form is submitted
-        createEmployee(values);
+
+        dispatch(addEmp(values));
         handleClose();
         resetForm();
       } catch (error) {
@@ -99,17 +95,6 @@ export default function AddEmployee({createEmployee}) {
       <option value={3}>Gears</option>
     </Form.Select>
 
-            {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Start date:</Form.Label>
-              <Form.Control
-                type="text"
-                name="date"
-                placeholder="DD/MM/YYYY"
-                autoFocus
-                onChange={formik.handleChange}
-                value={formik.values.date}
-              />
-            </Form.Group> */}
           </Form>
 
         </Modal.Body>

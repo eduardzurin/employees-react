@@ -4,8 +4,11 @@ import Form from "react-bootstrap/Form";
 import  { useState }  from "react";
 import { useFormik } from "formik";
 import { axiosInstance } from "../index.js";
+import { useDispatch } from 'react-redux';
+import { updateEmp } from "../store/actions/employees";
 
 export default function UpdateEmployee({ updateEmployee, employee }) {
+  const  dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       id: employee.id,
@@ -29,8 +32,7 @@ export default function UpdateEmployee({ updateEmployee, employee }) {
     },
     onSubmit: async (values, { resetForm }) => {
       try {
-        console.log(values);
-        updateEmployee(values);
+        dispatch(updateEmp(values))
         handleClose();
         resetForm();
       } catch (error) {

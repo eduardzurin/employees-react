@@ -1,30 +1,26 @@
 import { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
+import { useDispatch, useSelector } from 'react-redux';
 import { axiosInstance } from "../index.js";
+import { fetch } from "../store/actions/employees";
 import AddEmployee from "./AddEmployee";
 import Employee from "./Employee";
 
 export default function EmployeesTable() {
-  const [loading, setLoading] = useState(true);
-  const [employees, setEmployees] = useState([]);
+  const dispatch = useDispatch();
+  const employees = useSelector((state) => state.users.employeesList)
+  const loading = useSelector((state) => state.users.loading)
+
 
   useEffect(() => {
     let ignore = false;
-
     if (!ignore) {
-      fetchData();
+      dispatch(fetch());
     }
     return () => {
       ignore = true;
     };
-  }, []);
-
-  async function deleteEmployee(employee) {
-    await axiosInstance
-      .delete(`/employees/${employee.id}`)
-      .then((response) => response.data);
-    fetchData();
-  }
+  }, [dispatch]);
 
   async function updateEmployee(newEmployee) {
     console.log(newEmployee)
@@ -36,51 +32,20 @@ export default function EmployeesTable() {
         newEmployees[index].tribe = newEmployee.tribe;
       }
     }
-    setEmployees(newEmployees)
+    //setEmployees(newEmployees)
   }
 
-  async function fetchData() {
-    setLoading(true);
-    try {
-      const data = await axiosInstance
-        .get("/employees")
-        .then((response) => response.data);
-      data.forEach((employee) => {
-        employee["tribe"] = employee.tribe.name;
-      });
-      setTimeout(() => { 
-        setEmployees(data);
-        setLoading(false);
-      }, "1");
-
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function createEmployee(newEmployee) {
-    const body = {
-      name: newEmployee.name,
-      title: newEmployee.title,
-      tribe_id: newEmployee.tribe,
-    }
-    await axiosInstance.post(`/employees`, body).then((response) => response.data);
-    fetchData();
-  }
-
-  //console.log(employees);
   const listEmployees = employees.map((employee) => (
     <Employee
       key={employee.id}
       employee={employee}
-      deleteEmployee={deleteEmployee}
       update={updateEmployee}
     ></Employee>
   ));
   if (!loading) {
     return (
       <>
-        <AddEmployee createEmployee={createEmployee}></AddEmployee>
+        <AddEmployee></AddEmployee>
         <div className="container-fluid main-employees p-10 align-items-center">
           <table className="table table-hover shadow p-3 mb-5 bg-body rounded my-4">
             <thead>
