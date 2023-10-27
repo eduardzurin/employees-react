@@ -3,11 +3,11 @@ import Modal from "react-bootstrap/Modal";
 import Form from 'react-bootstrap/Form';
 import { useState } from "react";
 import { useFormik } from 'formik';
-import { axiosInstance } from "../index.js";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addEmp } from "../store/actions/employees";
 
 export default function AddEmployee() {
+  const tribes = useSelector((state) => state.tribes.tribesList)
 
   const dispatch = useDispatch();
 
@@ -32,6 +32,10 @@ export default function AddEmployee() {
       if (!values.tribe) {
         errors.tribe = 'Tribe is required';
       }
+      if (values.tribe === "Select tribe") {
+        errors.tribe = 'Tribe must be selec';
+      }
+
 
       return errors;
     },
@@ -47,6 +51,10 @@ export default function AddEmployee() {
       }
     },
   });
+
+  const listTribes = tribes.map((tribe) => (
+    <option key={tribe.id} value={tribe.id}>{tribe.name}</option>
+));
 
 
 
@@ -89,10 +97,8 @@ export default function AddEmployee() {
               />
             </Form.Group>
             <Form.Select name="tribe" onChange={formik.handleChange} value={formik.values.tribe} aria-label="Default select example">
-      <option>Select tribe</option>
-      <option value={1}>Interstellar</option>
-      <option value={2}>Billing</option>
-      <option value={3}>Gears</option>
+            <option>Select tribe</option>
+              {listTribes}
     </Form.Select>
 
           </Form>

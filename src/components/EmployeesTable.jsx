@@ -1,45 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import { useDispatch, useSelector } from 'react-redux';
-import { axiosInstance } from "../index.js";
 import { fetch } from "../store/actions/employees";
+import { fetchTheTribes } from "../store/actions/tribes";
 import AddEmployee from "./AddEmployee";
 import Employee from "./Employee";
 
 export default function EmployeesTable() {
   const dispatch = useDispatch();
-  const employees = useSelector((state) => state.users.employeesList)
-  const loading = useSelector((state) => state.users.loading)
+  const employees = useSelector((state) => state.employees.employeesList)
+  const loading = useSelector((state) => state.employees.loading)
 
 
   useEffect(() => {
     let ignore = false;
     if (!ignore) {
       dispatch(fetch());
+      dispatch(fetchTheTribes())
     }
     return () => {
       ignore = true;
     };
   }, [dispatch]);
 
-  async function updateEmployee(newEmployee) {
-    console.log(newEmployee)
-    const newEmployees = structuredClone(employees)
-    for (const index in newEmployees) {
-      if (newEmployees[index].id === newEmployee.id) {
-        newEmployees[index].name = newEmployee.name;
-        newEmployees[index].title = newEmployee.title;
-        newEmployees[index].tribe = newEmployee.tribe;
-      }
-    }
-    //setEmployees(newEmployees)
-  }
+
 
   const listEmployees = employees.map((employee) => (
     <Employee
       key={employee.id}
       employee={employee}
-      update={updateEmployee}
     ></Employee>
   ));
   if (!loading) {

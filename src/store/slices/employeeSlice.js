@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { axiosInstance } from "../../index.js";
 
 export const employeeSlice = createSlice({
     name: "employees",
@@ -8,7 +7,6 @@ export const employeeSlice = createSlice({
         success: false,
         loading: true,
     },
-
     reducers: {
         loadEmployees: (state) => {
             state.loading = true;
@@ -18,6 +16,7 @@ export const employeeSlice = createSlice({
             state.employeesList = action.payload;
             state.loading = false;
         },
+
 
         fetchEmployeesError: async (state) => {
             state.employeesList = [];
@@ -38,15 +37,7 @@ export const employeeSlice = createSlice({
         },
         
         updateEmployee (state, action) {
-            const newEmployees = state.employeesList;
-            for (const index in newEmployees) {
-              if (newEmployees[index].id === action.payload.id) {
-                newEmployees[index].name = action.payload.name;
-                newEmployees[index].title = action.payload.title;
-                newEmployees[index].tribe = action.payload.tribe;
-              }
-            }
-            state.loading = false;
+            state.success = action.payload
         }
     }
 })

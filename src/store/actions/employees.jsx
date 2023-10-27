@@ -12,15 +12,15 @@ export function fetch() {
   return async (dispatch) => {
     try {
       dispatch(loadEmployees());
-      const data = await axiosInstance
+      const employeesData = await axiosInstance
         .get("/employees")
         .then((response) => response.data);
 
-      data.forEach((employee) => {
+        employeesData.forEach((employee) => {
         employee["tribe"] = employee.tribe.name;
       });
 
-      dispatch(fetchEmployees(data));
+      dispatch(fetchEmployees(employeesData))
     } catch (error) {
       dispatch(fetchEmployeesError);
     }
@@ -66,7 +66,18 @@ export function updateEmp(employee) {
   return async (dispatch) => {
     try {
       dispatch(loadEmployees());
-      dispatch(updateEmployee(employee));
+      const body = {
+        name: employee.name,
+        title: employee.title,
+        tribe_id: employee.tribe,
+      };
+
+      const success = await axiosInstance
+        .put(`/employees/${employee.id}`, body)
+        .then((response) => response.data);
+
+      dispatch(updateEmployee(success));
+      dispatch(fetch());
     } catch (error) {
       console.log(error);
     }

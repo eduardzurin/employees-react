@@ -1,10 +1,9 @@
 import '../index.css';
 import UpdateEmployee from "./UpdateEmployee";
-import useState from "react";
 import { useDispatch} from 'react-redux';
 import { deleteEmp} from "../store/actions/employees";
 
-export default function Employee({employee, update}){
+export default function Employee({employee}){
   const dispatch = useDispatch();
 
     return(
@@ -16,7 +15,7 @@ export default function Employee({employee, update}){
           <td>{employee.date}</td>
           <td>
         <button onClick={() => dispatch(deleteEmp(employee))} id='deletebtn' className="btn btn-danger">x</button>
-        <UpdateEmployee updateEmployee={update} employee={employee} id='updatebtn' className="btn btn-primary"></UpdateEmployee>
+        <UpdateEmployee employee={employee} id='updatebtn' className="btn btn-primary"></UpdateEmployee>
       </td>
     </tr>
 

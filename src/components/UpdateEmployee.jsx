@@ -1,20 +1,27 @@
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import  { useState }  from "react";
 import { useFormik } from "formik";
-import { axiosInstance } from "../index.js";
-import { useDispatch } from 'react-redux';
+import { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+import { useDispatch, useSelector } from 'react-redux';
 import { updateEmp } from "../store/actions/employees";
 
-export default function UpdateEmployee({ updateEmployee, employee }) {
-  const  dispatch = useDispatch();
+export default function UpdateEmployee({ employee }) {
+  const dispatch = useDispatch();
+  
+  const tribes = useSelector((state) => state.tribes.tribesList)
+
+  let tribe = 1;
+  if (tribes.length !== 0) {
+    tribe = (tribes.filter((tribe) => tribe.name === employee.tribe)[0].id)
+  }
+
   const formik = useFormik({
     initialValues: {
       id: employee.id,
       name: employee.name,
       title: employee.title,
-      tribe: employee.tribe,
+      tribe: tribe,
     },
     validate: (values) => {
       const errors = {};
@@ -44,7 +51,15 @@ export default function UpdateEmployee({ updateEmployee, employee }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    formik.values.tribe = tribe
+    setShow(true);
+  }
+  
+ const listTribes = tribes.map((tribe) => (
+     <option key={tribe.id} value={tribe.id}>{tribe.name}</option>
+));
+
   return (
     <>
       <div className="container-fluid my-4">
@@ -84,10 +99,7 @@ export default function UpdateEmployee({ updateEmployee, employee }) {
               value={formik.values.tribe}
               aria-label="Default select example"
             >
-              <option>{employee.tribe}</option>
-              <option value={1}>Internstellar</option>
-              <option value={2}>Billing</option>
-              <option value={3}>Gears</option>
+              {listTribes}
             </Form.Select>
           </Form>
         </Modal.Body>
@@ -99,7 +111,7 @@ export default function UpdateEmployee({ updateEmployee, employee }) {
             type="submit"
             variant="primary"
             onClick={() => formik.handleSubmit()}
-            disabled={Object.keys(formik.errors).length > 0 || !formik.dirty}
+            disabled={Object.keys(formik.errors).length > 0}
           >
             Update Employee
           </Button>
