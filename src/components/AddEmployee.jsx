@@ -60,7 +60,7 @@ export default function AddEmployee() {
 
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {setShow(false); formik.resetForm();}
   const handleShow = () => setShow(true);
   return (
     <>
@@ -91,7 +91,6 @@ export default function AddEmployee() {
                 type="text"
                 name="title"
                 placeholder="Title"
-                autoFocus
                 onChange={formik.handleChange} 
                 value={formik.values.title}
               />

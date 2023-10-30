@@ -88,7 +88,6 @@ export default function UpdateEmployee({ employee }) {
                 type="text"
                 name="title"
                 placeholder="Title"
-                autoFocus
                 onChange={formik.handleChange}
                 value={formik.values.title}
               />
